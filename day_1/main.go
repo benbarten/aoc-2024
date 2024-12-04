@@ -100,5 +100,6 @@ func main() {
 		score += lv * multiplier
 	}
 
+	// Part 2
 	fmt.Println(score)
 }
