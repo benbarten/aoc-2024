@@ -138,13 +138,7 @@ func main() {
 
 	seq = []int{2, 4, 1, 5, 7, 5, 1, 6, 0, 3, 4, 2, 5, 5, 3, 0}
 
-	end := &State{
-		A:      0,
-		result: seq,
-		iptr:   len(seq),
-	}
-
-	part2 := reverse(end, seq)
+	part2 := reverse(seq)
 	slices.Sort(part2)
 
 	// part 2
@@ -167,17 +161,17 @@ func main() {
 	fmt.Println("Validate out: ", strings.Join(validateResult, ","))
 }
 
-func reverse(end *State, seq []int) []int {
-    type QueueItem struct {
+func reverse(seq []int) []int {
+    type Item struct {
         a    int
         n    int
     }
     
     queue := list.New()
-    queue.PushBack(QueueItem{a: 0, n: 1})
+    queue.PushBack(Item{a: 0, n: 1})
     
     for queue.Len() > 0 {
-        item := queue.Remove(queue.Front()).(QueueItem)
+        item := queue.Remove(queue.Front()).(Item)
         a, n := item.a, item.n
         
         if n > len(seq) {
@@ -198,7 +192,8 @@ func reverse(end *State, seq []int) []int {
             }
             
             if matchesOutput(s.result, target) {
-                queue.PushBack(QueueItem{a: a2, n: n + 1})
+				fmt.Printf("A: %b\n", a2)
+                queue.PushBack(Item{a: a2, n: n + 1})
             }
         }
     }
